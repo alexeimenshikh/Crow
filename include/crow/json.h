@@ -630,7 +630,7 @@ namespace crow
                 return (option_ & error_bit) != 0;
             }
 
-            std::vector<std::string> keys()
+            std::vector<std::string> keys() const
             {
 #ifndef CROW_JSON_NO_ERROR_CHECK
                 if (t() != type::Object)
@@ -1239,7 +1239,7 @@ namespace crow
 #ifdef CROW_JSON_USE_MAP
               std::map<std::string, wvalue>;
 #else
-              std::unordered_map<std::string, wvalue>;
+              absl::flat_hash_map<std::string, wvalue>;
 #endif
 
             using list = std::vector<wvalue>;
@@ -1422,6 +1422,7 @@ namespace crow
             wvalue& operator=(wvalue&& r)
             {
                 t_ = r.t_;
+                nt = r.nt;
                 num = r.num;
                 s = std::move(r.s);
                 l = std::move(r.l);
